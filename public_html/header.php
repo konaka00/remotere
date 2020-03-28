@@ -1,6 +1,6 @@
 <?php
 //プロフィールのデフォルト画像
-if ($_SERVER['PHP_SELF'] !== "/index.php") {
+if ($_SERVER['PHP_SELF'] !== "/index.php" && isset($userInfo)) {
     $user = new \MyApp\Model\User();
     $profile = $user->getProfile($userInfo);
     $profImagePath = 'profthumbs/' . $profile['saveFileName'];

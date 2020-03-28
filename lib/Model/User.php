@@ -190,7 +190,6 @@ class User extends \MyApp\Model {
            $stmt->bindValue(1, $filePath, \PDO::PARAM_STR);
            $stmt->execute();
            $count = $stmt->rowCount();
-           //なんとなくオブジェクト指定
            $res = $stmt->fetchAll(\PDO::FETCH_CLASS, 'stdClass');
            $username = [];
            $comments = [];
@@ -203,4 +202,34 @@ class User extends \MyApp\Model {
 
        }
 
+       public function deleteImage($fileName) {
+           $imagePath = IMAGES_DIR_PATH . $fileName;
+           $thumbPath = 'thumbs' . $fileName;
+        //    $this->db->beginTransaction();
+           try {
+               $sql_t = 'delete from titles where filePath = :imagePath';
+               $stmt = $this->db->prepare($sql_t);
+               $stmt->execute([
+                ':imagePath' => $imagePath
+               ]);
+               var_dump($imagePath);
+    
+               $sql_n = 'delete from nices where niceDir = :thumbPath';
+               $stmt = $this->db->prepare($sql_n);
+               $stmt->execute([
+                ':thumbPath' => $thumbPath
+               ]);
+
+               $sql_c = 'delete from comments where filePath = :thumbPath';
+               $stmt = $this->db->prepare($sql_c);
+               $stmt->execute([
+                ':thumbPath' => $thumbPath
+               ]);
+            } catch(\PDOException $e) {
+                // $this->db->rollback();
+                echo $e->getMessage();
+                exit;
+            }
+            // $this->db->commit();
+        }
 }

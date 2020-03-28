@@ -43,9 +43,9 @@ $nices = $app->getNices();
         <ul id="my_image">
             <?php foreach($images as $title => $image) : ?>
             <li id="box">
-                <p id="box_title"><?= h($title); ?></p>
+                <p id="box_title"><?= h($title); ?><span class="box_delete" data-id="<?= substr($image, 6); ?>">X</span></p>
                 <a href="<?= str_replace('thumbs', 'images', $image); ?>" data-lightbox="mainimage" data-title="<?= h($title); ?> Nice:<?= isset($nices[$image]) ? h($nices[$image]) : '0'; ?>">
-                    <img id="box_image" src="<?= h($image); ?>">
+                    <img id="box_image" src="<?= /*ファイル名だけ取得処理*/h($image); ?>">
                 </a>
             </li>
             <?php endforeach; ?>
@@ -62,7 +62,28 @@ $nices = $app->getNices();
             $('#submit').on('click', function() {
                 $('#form').submit();
             });
-            });
+
+            $('.box_delete').on('click', function() {
+                var fileName =  $(this).data('id');
+                var fileDir =  $(this).parent('#box_title').parent('#box');
+
+                $.ajax({
+                    url: '/delete.php',
+                    type: 'post',
+                    data: {
+                        fileName : fileName
+                    }
+                }).done(function() {
+                    fileDir.remove();
+                    console.log('success');
+                }).fail(function(XMLHttpRequest, textStatus, errorThrown) { 
+                    console.log(XMLHttpRequest.status);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                });          
+
+        });
+        });
     </script>
 </body>
 </html>

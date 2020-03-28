@@ -101,7 +101,7 @@ $myNice = $user->addDone($userInfo->username);
                     nice.text(res.count);
                     nice_btn.toggleClass('done');
 
-                }) .fail(function(XMLHttpRequest, textStatus, errorThrown) { 
+                }).fail(function(XMLHttpRequest, textStatus, errorThrown) { 
                     console.log(XMLHttpRequest.status);
                     console.log(textStatus);
                     console.log(errorThrown);

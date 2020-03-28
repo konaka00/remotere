@@ -8,7 +8,7 @@ body {
 }
 
 #header {
-    height: 20px;
+    /* height: 20px; */
     display: flex;
     align-content: space-between;
     justify-content: space-between;
@@ -17,6 +17,14 @@ body {
     background: #3897EF;
     font-weight: bold;
     color: #fff;
+}
+
+#line_space {
+    /* height: 20px; */
+    margin: 20px 0 5px;
+    padding: 3px;
+    border-top: 2px solid #ddd;
+    border-bottom: 2px solid #ddd;
 }
 
 
@@ -125,6 +133,7 @@ input {
     box-shadow: 0 0 10px #808080;
 }
 #box_title {
+    position: relative;
     margin: 0 auto;
     padding: 16px 0;
     background: #ddd;
@@ -193,6 +202,16 @@ input {
     font-size: 12px;
     text-decoration: none;
 }
+.box_delete {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: red;
+    font-weight: bold;
+    text-align: end;
+    cursor: pointer;
+}
+
 #prof_container {
     display: flex;
     width: 500px;
@@ -288,18 +307,24 @@ textarea {
     padding: 0;
     width: 900px;
     column-count: 3;
-    gap: 0;
+    gap: 10px;
 }
 .grid_item { 
     width: 300px;
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;   
+    height: 200px;
+    background: gray;
+    /* -webkit-column-break-inside: avoid; */
+    /* page-break-inside: avoid; */
+    /* break-inside: avoid;    */
     margin: 0;
     padding: 0;
+    /* overflow: hidden; */
 }
 .grid_item > img {
+    width: 300px;
+    height: 300px;
     vertical-align: bottom;
+    object-fit: cover;
 }
 
 .btn {

@@ -20,18 +20,18 @@ $values = $app->getMainImages($imageUser);
 </head>
 <body>
     <header>
-        <h1><?= h($imageUser); ?> Images</h1>
-        <div id="header">
-            <div id="back"><a href="/index.php">Back</a></div>
-        </div>
+        <?php include(__DIR__ . '/header.php'); ?>
     </header>
+    <div id="line_space">
+        <div id="back"><a href="/index.php">Back</a></div>
+    </div>
         <div id="image_container">
             <?php foreach($values as $title => $value) : ?>
             <div class="grid_item">
                 <img src="<?= h($value); ?>">
             </div>
             <?php endforeach; ?>
-            </div>
+        </div>
     <footer>
     </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

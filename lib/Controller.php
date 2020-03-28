@@ -14,7 +14,7 @@ class Controller {
 
 
     /*
-    画像の保存・サムネイル作成
+    オリジナル画像・サムネイル保存
     */
     protected $files;
     protected $fileName;
@@ -61,8 +61,8 @@ class Controller {
         $ImageResouce = $this->createImageResouce($filePath, $this->files);
         imagecopyresampled($thumbResouce, $ImageResouce, 0,0,0,0, 
         $thumbWidth, $thumbHeight, $imageWidth, $imageHeight);
-        }
         return $thumbResouce;
+        }
     }
 
     protected function createImageResouce($filePath, $files) {
@@ -97,6 +97,17 @@ class Controller {
             default:
                 throw new \Exception('Cant create thumbs' . $this->files['type']);
 
+        }
+    }
+
+
+    /*
+    オリジナル画像・サムネイル削除
+    */
+    public function deleteFile($fileName) {
+        $res = unlink(IMAGES_DIR_PATH . $fileName);
+        if (file_exists(THUMBS_DIR_PATH . $fileName)) {
+            unlink(THUMBS_DIR_PATH . $fileName);
         }
     }
 

@@ -25,7 +25,9 @@ class UsersPage extends \MyApp\Controller {
                 $filePath = $this->saveImage($ext, IMAGES_DIR_PATH);
                 $this->saveTitle($filePath);
                 $thumbResouce = $this->createThumbnail($filePath, 400);
-                $this->saveThumbnail($filePath, $thumbResouce, THUMBS_DIR_PATH);
+                if(isset($thumbResouce)){
+                    $this->saveThumbnail($filePath, $thumbResouce, THUMBS_DIR_PATH);
+                }
         }
 
        
