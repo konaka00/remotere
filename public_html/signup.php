@@ -20,6 +20,11 @@ $app->run();
         <h1>New Account</h1>
         <div id="container">
             <form action="" method="post" id="form">
+                <div class="err">
+                    <?= $app->getErrors('username'); ?>
+                    <?= $app->getErrors('email'); ?>
+                    <?= $app->getErrors('password'); ?>
+                </div>
                 <input type="text" name="username" placeholder="User Name">
                 <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">

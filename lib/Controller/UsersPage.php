@@ -9,8 +9,11 @@ class UsersPage extends \MyApp\Controller {
             try {
                 $this->postImageProcess();
             } catch(\Exception $e) {
-                echo $e->getMessage();
-                exit;
+                $this->setErrors('title', $e->getMessage());
+                return;
+            } catch(\MyApp\Exception\File $e) {
+                $this->setErrors('file', $e->getMessage());
+                return;
             }
             header('Location: http://' . $_SERVER['HTTP_HOST'] . '/userspage.php');
         }
@@ -39,7 +42,7 @@ class UsersPage extends \MyApp\Controller {
 
         private function validate() {
             if (!isset($_POST['title']) || empty($_POST['title'])) {
-                throw new \Exception('Please insert Title');
+                throw new \Exception('タイトルを入力してください');
             }
             $this->validateFile($this->files);
         }

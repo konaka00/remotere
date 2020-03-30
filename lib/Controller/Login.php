@@ -13,9 +13,12 @@ class Login extends \MyApp\Controller {
     
             try {
                 $this->validateEmailAndPass();
-            } catch(\Exception $e) {
-                echo $e->getMessage();
-                exit;
+            } catch(\MyApp\Exception\Email $e) {
+                $this->setErrors('email', $e->getMessage());
+                return;
+            } catch(\MyApp\Exception\Password $e) {
+                $this->setErrors('password', $e->getMessage());
+                return;
             }
             $this->login();
             if (isset($_POST['image'])) {

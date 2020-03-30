@@ -15,8 +15,14 @@ public function run() {
             $this->validateUserName();
 
         } catch(\Exception $e) {
-            echo $e->getMessage();
-            exit;
+            $this->setErrors('username', $e->getMessage());
+            return;
+        } catch(\MyApp\Exception\Email $e) {
+            $this->setErrors('email', $e->getMessage());
+            return;
+        } catch(\MyApp\Exception\Password $e) {
+            $this->setErrors('password', $e->getMessage());
+            return;
         }
         $this->signUp();
 
@@ -39,16 +45,16 @@ public function run() {
     }
 
     private function validateUserName() {
-        $this->validateEmailAndPass();
+        if ($_POST['username'] === "") {
+            throw new \Exception('Usernameを入力して下さい');
+        }
         if (!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['username'])) {
-            throw new \Exception('Invalid User Name');
+            throw new \Exception('UserNameは半角英数字にして下さい');
         }
-        if ($_POST['usewrname'] === "") {
-            throw new \Exception('Enter Username');
+        if (mb_strlen($_POST['username']) > 20) {
+            throw new \Exception('UserNameは20文字以下です');
         }
-        if (mb_strlen($_POST['usewrname']) > 20) {
-            throw new \Exception('Too Long! Within 20 words');
-        }
+        $this->validateEmailAndPass();
     }
 }
 

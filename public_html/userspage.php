@@ -29,6 +29,10 @@ $nices = $app->getNices();
     </header>
     <div id="file_container">
         <form action="" method="post" enctype="multipart/form-data" id="form">
+            <div class="err">
+                <?= $app->getErrors('title'); ?>
+                <?= $app->getErrors('file'); ?>
+            </div>
             <input type="hidden" name="MAX_FILE_SIZE" value="">
             <div id="file_back">
                 <input type="file" name="image" id="put_image">

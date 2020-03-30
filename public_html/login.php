@@ -28,9 +28,14 @@ if (isset($_GET['image'])) {
         <h1>Login Page</h1>
         <div id="container">
             <form action="" method="post" id="form">
+            <div class="err">
+                <?= $app->getErrors('username'); ?>
+                <?= $app->getErrors('email'); ?>
+                <?= $app->getErrors('password'); ?>
+            </div>
                 <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
-                <!-- 条件分岐　表示非表示 -->
+                <!-- commetn.phpからのログイン用 -->
                 <input type="hidden" name="image" value="<?= $image ?>" id="hidden">
                 <div id="submit">Login</div>
             </form>

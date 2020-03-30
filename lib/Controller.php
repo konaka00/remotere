@@ -3,13 +3,24 @@
 namespace MyApp;
 
 class Controller {
+    private $error;
     public function __construct() {
-
+        $this->error = new \stdClass();
     }
     public function isLoggedIn() {
         if (isset($_SESSION['userInfo'])) {
             header('Location: http://' . $_SERVER['HTTP_HOST'] . '/mainpage.php');
         } 
+    }
+    /*
+    エラー出力制御
+    */
+    
+    protected function setErrors($key, $err) {
+        $this->error->$key = $err;
+    }
+    public function getErrors($key) {
+        return isset($this->error->$key) ? $this->error->$key : '';
     }
 
 
@@ -116,37 +127,36 @@ class Controller {
     validateFile
     */
     protected function validateFile($files) {
-        if (!isset($files) || !isset($files['error'])) {
-            throw new \Exception('Invalid form');
+        var_dump($files);
+        if ($files['tmp_name'] === "" || !isset($files['error'])) {
+            throw new \MyApp\Exception\File('画像を選んでください');
+            return;
         }
         switch($files['error']) {
             case 0:
                 return true;
             case 1:
             case 2:
-                throw new \Exception('File too large');
+                throw new \MyApp\Exception\File('オーバーサイズです');
             case 4:
-                throw new \Exception('Upload failure');
+                throw new \MyApp\Exception\File('アップロードに失敗しました');
             default:
-                throw new \Exception('Upload Error:' . $files['error']);
+                throw new \MyApp\Exception\File('Upload Error:' . $files['error']);
         }
     }
 
     protected function validateEmailAndPass() {
+        if (!isset($_POST['email']) || $_POST['email'] === '' ) {
+            throw new \MyApp\Exception\Email('Emailをセットして下さい');
+        }
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('Invalid Email Address');
+            throw new \MyApp\Exception\Email('Emailの型が正しくありません');
+        }
+        if (!isset($_POST['password']) || $_POST['password'] === '') {
+            throw new \MyApp\Exception\Password('Passwordをセットして下さい');
         }
         if (!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['password'])) {
-            throw new \Exception('Invalid Password');
-        }
-        if (!isset($_POST['email']) || !isset($_POST['password']) ) {
-            throw new \Exception('Not set Email or Password');
-        }
-        if ($_POST['email'] === '' || $_POST['password'] === '') {
-            throw new \Exception('Please Enter Email & Password');
-        }
-        if(!isset($_POST['email']) || !isset($_POST['password']) ) {
-            throw new \Exception('Not set Email or Password');
+            throw new \MyApp\Exception\Password('Passwordは半角英数字です');
         }
 
     }

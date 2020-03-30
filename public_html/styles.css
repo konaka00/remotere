@@ -358,3 +358,9 @@ textarea {
     box-shadow: none;
     color: black;
 }
+
+.err {
+    font-size: 10px;
+    font-weight: 600;
+    color: red;
+}
